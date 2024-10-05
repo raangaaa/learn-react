@@ -6,8 +6,8 @@ import "./CountryView.scss";
 
 const CountryView = ({ countries, search, dataSearch, property, order, limit }) => {
 	return (
-		<div className="container">
-			<div className="country-filter bg-base-100">
+		<div className="container dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text">
+			<div className="country-filter">
 				<h1 className="text-head">Filter</h1>
 				<label className="form-control w-full">
 					<div className="label">
@@ -16,7 +16,7 @@ const CountryView = ({ countries, search, dataSearch, property, order, limit }) 
 					<input
 						type="number"
 						placeholder="Type here"
-						className="input input-bordered w-full"
+						className="input input-bordered w-full dark:bg-dark-2 bg-light dark:text-light-text text-dark-text"
 						onChange={(i) => limit(i.target.value)}
 					/>
 				</label>
@@ -25,7 +25,7 @@ const CountryView = ({ countries, search, dataSearch, property, order, limit }) 
 						<span className="label-text">Sortby:</span>
 					</div>
 					<select
-						className="select select-bordered w-full"
+						className="select select-bordered w-full dark:bg-dark-2 bg-light dark:text-light-text text-dark-text"
 						onChange={(i) => property(i.target.value)}
 					>
 						<option value="name" selected>
@@ -43,7 +43,7 @@ const CountryView = ({ countries, search, dataSearch, property, order, limit }) 
 						<span className="label-text">Orderby:</span>
 					</div>
 					<select
-						className="select select-bordered w-full"
+						className="select select-bordered w-full dark:bg-dark-2 bg-light dark:text-light-text text-dark-text"
 						onChange={(i) => order(i.target.value)}
 					>
 						<option value="asc" selected>
@@ -61,7 +61,7 @@ const CountryView = ({ countries, search, dataSearch, property, order, limit }) 
 				</div>
 				<div className="country-grid">
 					{countries?.map((item) => (
-						<div className="country-card bg-base-100" key={item.id}>
+						<div className="country-card" key={item.id}>
 							<div className="country-image-wrapper">
 								<img
 									src={item.flag}

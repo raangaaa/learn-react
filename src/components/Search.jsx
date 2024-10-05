@@ -6,7 +6,7 @@ const Search = ({ search }) => {
 		<>
 			<div className="w-full h-max my-5 p-3 space-y-4 flex flex-col items-center">
 				<form className="w-1/2">
-					<label className="input input-bordered flex items-center gap-2">
+					<label className="input input-bordered flex items-center gap-2 dark:bg-dark-2 bg-light dark:text-light-text text-dark-text">
 						<input
 							type="text"
 							name="q"

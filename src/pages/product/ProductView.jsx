@@ -17,12 +17,12 @@ const ProductView = ({ products, search, error }) => {
 	}
 
 	return (
-		<>
+		<div className="dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text">
 			<h1 className="page-heading">Products</h1>
 			<Search search={search} />
 			<div className="product-grid">
 				{products?.map((item) => (
-					<div className="product-card bg-base-100" key={item.id}>
+					<div className="product-card" key={item.id}>
 						<div className="product-image-wrapper">
 							<img
 								src={item.image}
@@ -45,7 +45,7 @@ const ProductView = ({ products, search, error }) => {
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	);
 };
 

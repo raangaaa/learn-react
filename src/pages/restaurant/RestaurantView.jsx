@@ -18,7 +18,7 @@ const RestaurantView = ({ resto, error, search, query }) => {
 	}
 
 	return (
-		<div className="dark:bg-slate-600">
+		<div className="dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text">
 			<h1 className="page-heading">Restaurants</h1>
 			<Search search={search} />
 			<div className="restaurant-info">
@@ -26,7 +26,7 @@ const RestaurantView = ({ resto, error, search, query }) => {
 			</div>
 			<div className="restaurant-grid">
 				{resto?.restaurants?.map((item) => (
-					<div className="restaurant-card bg-base-100" key={item.id}>
+					<div className="restaurant-card" key={item.id}>
 						<div className="restaurant-image-wrapper">
 							<img
 								src={`https://restaurant-api.dicoding.dev/images/small/${item.pictureId}`}

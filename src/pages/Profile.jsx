@@ -1,7 +1,7 @@
 const Profile = () => {
 	return (
 		<div>
-			<div className="hero bg-base-200 min-h-screen">
+			<div className="hero dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text min-h-screen">
 				<div className="hero-content flex-col lg:flex-row">
 					<img
 						src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
@@ -14,12 +14,16 @@ const Profile = () => {
 							excepturi exercitationem quasi. In deleniti eaque aut repudiandae
 							et a id nisi.
 						</p>
-						<button className="btn btn-primary">Get Started</button>
+						<button className="btn bg-blue-600 border-none text-white hover:bg-blue-700">
+							Get Started
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
 };
+
+//
 
 export default Profile;
