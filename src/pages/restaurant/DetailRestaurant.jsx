@@ -1,30 +1,38 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { detailResto } from "../../stores/actions/restaurantAction";
 
 const DetailRestaurant = () => {
-	const [selectedResto, setSelectedResto] = useState(null);
+	const selectedResto = useSelector((state) => state.resto.detailResto);
+	const dispatch = useDispatch();
 
 	const { id } = useParams();
 
+	const fetchData = useCallback(async () => {
+		try {
+			const response = await axios.get(
+				`https://restaurant-api.dicoding.dev/detail/${id}`
+			);
+			return response.data.restaurant;
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}, [id]);
+
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(
-					`https://restaurant-api.dicoding.dev/detail/${id}`
-				);
-				setSelectedResto(response.data.restaurant);
-			} catch (error) {
-				console.error("Error fetching data:", error);
-			}
+		const getData = async () => {
+			const data = await fetchData();
+			dispatch(detailResto(data));
 		};
 
-		fetchData();
-	}, [id]);
+		getData();
+	}, [dispatch, fetchData, id]);
 
 	return (
 		<div>
-			<div className="hero bg-base-200 min-h-screen flex flex-col">
+			<div className="hero dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text min-h-screen flex flex-col">
 				<div className="hero-content flex-col lg:flex-row">
 					<img
 						src={`https://restaurant-api.dicoding.dev/images/small/${selectedResto?.pictureId}`}
@@ -52,9 +60,10 @@ const DetailRestaurant = () => {
 							<h3 className="text-lg font-semibold mb-2">Category</h3>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<ul className="list-disc list-inside">
-									{selectedResto?.categories.map((category, index) => (
-										<li key={index}>{category.name}</li>
-									))}
+									{selectedResto?.categories &&
+										selectedResto.categories.map((category, index) => (
+											<li key={index}>{category.name}</li>
+										))}
 								</ul>
 							</div>
 						</div>
@@ -68,18 +77,20 @@ const DetailRestaurant = () => {
 							<div>
 								<h4 className="font-semibold">Makanan</h4>
 								<ul className="list-disc list-inside">
-									{selectedResto?.menus.foods.map((food, index) => (
-										<li key={index}>{food.name}</li>
-									))}
+									{selectedResto?.menus?.foods &&
+										selectedResto.menus.foods.map((food, index) => (
+											<li key={index}>{food.name}</li>
+										))}
 								</ul>
 							</div>
 							{/* List minuman */}
 							<div>
 								<h4 className="font-semibold">Minuman</h4>
 								<ul className="list-disc list-inside">
-									{selectedResto?.menus.drinks.map((drink, index) => (
-										<li key={index}>{drink.name}</li>
-									))}
+									{selectedResto?.menus?.drinks &&
+										selectedResto.menus.drinks.map((drink, index) => (
+											<li key={index}>{drink.name}</li>
+										))}
 								</ul>
 							</div>
 						</div>

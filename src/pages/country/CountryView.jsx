@@ -6,7 +6,7 @@ import "./CountryView.scss";
 
 const CountryView = ({ countries, search, dataSearch, property, order, limit }) => {
 	return (
-		<div className="container dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text">
+		<div className="container dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text min-h-screen">
 			<div className="country-filter">
 				<h1 className="text-head">Filter</h1>
 				<label className="form-control w-full">

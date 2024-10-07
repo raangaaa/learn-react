@@ -2,10 +2,13 @@ import axios from "axios";
 import { memo, useCallback, useEffect, useState } from "react";
 import RestaurantView from "./RestaurantView";
 import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addResto } from "../../stores/actions/restaurantAction";
 
 const Restaurant = () => {
-	const [resto, setResto] = useState({});
+	const resto = useSelector((state) => state.resto.resto);
 	const [error, setError] = useState();
+	const dispatch = useDispatch()
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const q = searchParams.get("q");
@@ -16,7 +19,7 @@ const Restaurant = () => {
 			const response = await axios.get(
 				"https://restaurant-api.dicoding.dev/list"
 			);
-			setResto(response.data);
+			return response.data.restaurants;
 		} catch (error) {
 			setError(error);
 			console.error("Error fetching data:", error);
@@ -28,7 +31,7 @@ const Restaurant = () => {
 			const response = await axios.get(
 				`https://restaurant-api.dicoding.dev/search?q=${q}`
 			);
-			setResto(response.data);
+			return response.data.restaurants;
 		} catch (error) {
 			setError(error);
 			console.error("Error fetching data:", error);
@@ -36,8 +39,13 @@ const Restaurant = () => {
 	}, [q]);
 
 	useEffect(() => {
-		!q ? fetchData() : searchResto();
-	}, [q, searchResto]);
+		const getData = async (fetchData) => {
+			const data = await fetchData();
+			dispatch(addResto(data));
+		};
+
+		!q ? getData(fetchData) : getData(searchResto);
+	}, [dispatch, q, searchResto]);
 
 	return (
 		<div>

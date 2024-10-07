@@ -1,28 +1,32 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { Link } from "react-router-dom";
-import ThemeContext from "../contexts/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toogleTheme } from "../stores/actions/themeAction";
+import { setLang } from "../stores/actions/langAction";
+import { setUserRole } from "../stores/actions/userAction";
 
 const Navbar = () => {
-	const [getTheme, setTheme] = useContext(ThemeContext);
 	const root = window.document.documentElement.classList;
 
-	const toggleTheme = useCallback(
-		(theme) => {
-			if (getTheme === "light") {
-				setTheme(theme);
-				root.remove("light");
-				root.add("dark");
-			} else {
-				setTheme("light");
-				root.remove("dark");
-				root.add("light");
-			}
+	const theme = useSelector((state) => state.theme.theme);
+	// const lang = useSelector((state) => state.lang.lang);
+	const userRole = useSelector((state) => state.user.user.role);
+	console.log(userRole);
 
-			console.log(getTheme);
-		},
-		[getTheme, root, setTheme]
-	);
-	
+	const dispatch = useDispatch();
+
+	const toggleTheme = useCallback(() => {
+		if (theme === "light") {
+			dispatch(toogleTheme());
+			root.remove("light");
+			root.add("dark");
+		} else {
+			dispatch(toogleTheme());
+			root.remove("dark");
+			root.add("light");
+		}
+	}, [dispatch, root, theme]);
+
 	return (
 		<>
 			<nav className="navbar dark:bg-dark bg-light dark:text-light-text text-dark-text sticky top-0 z-50">
@@ -88,15 +92,33 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="navbar-end pr-5">
+				<div className="navbar-end pr-5 space-x-3">
+					<select
+						className="select dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text"
+						onChange={(i) => dispatch(setUserRole(i.target.value))}
+						defaultValue="superAdmin"
+					>
+						<option value="superAdmin">Super Admin</option>
+						<option value="admin">Admin</option>
+						<option value="user">User</option>
+					</select>
+					<select
+						className="select dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text"
+						onChange={(i) => dispatch(setLang(i.target.value))}
+						defaultValue="id"
+					>
+						<option value="id">🇮🇩 ID</option>
+						<option value="en">🇬🇧 EN</option>
+						<option value="jp">🇯🇵 JP</option>
+						<option value="ch">🇨🇳 CH</option>
+					</select>
 					<label className="swap swap-rotate">
 						{/* this hidden checkbox controls the state */}
 						<input
 							type="checkbox"
 							className="theme-controller"
-							value="dark"
-							onChange={(i) => toggleTheme(i.target.value)}
-							checked={getTheme === "light" ? false : true}
+							onChange={() => toggleTheme()}
+							checked={theme === "light" ? false : true}
 						/>
 
 						{/* sun icon */}

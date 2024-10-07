@@ -1,4 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { useState } from "react";
+import store from "./stores/store"
 
 import ThemeContext from "./contexts/ThemeContext"
 
@@ -16,7 +19,6 @@ import CountryPage from "./pages/CountryPage";
 import DetailCountry from "./pages/country/DetailCountry";
 
 import Error404 from "./pages/errors/Error404";
-import { useState } from "react";
 
 const App = () => {
 	const theme = useState("light");
@@ -24,6 +26,7 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<ThemeContext.Provider value={theme}>
+			<Provider store={store}>
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
@@ -37,6 +40,7 @@ const App = () => {
 					<Route path="*" element={<Error404 />} />
 				</Routes>
 				<Footer />
+			</Provider>
 			</ThemeContext.Provider>
 		</BrowserRouter>
 	);

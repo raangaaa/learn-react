@@ -25,7 +25,6 @@ const Alert = ({error}) => {
 };
 
 Alert.propTypes = {
-	error: PropTypes.string
 }
 
 export default memo(Alert);

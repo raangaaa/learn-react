@@ -24,7 +24,7 @@ const DetailProduct = () => {
 
 	return (
 		<div>
-			<div className="hero bg-base-200 min-h-screen flex flex-col justify-center">
+			<div className="hero dark:bg-dark-2 bg-light-2 dark:text-light-text text-dark-text min-h-screen flex flex-col justify-center">
 				<div className="hero-content flex-col lg:flex-row space-x-3">
 					<img
 						src={singleProduct?.image}

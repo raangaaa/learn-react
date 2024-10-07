@@ -25,7 +25,7 @@ const RestaurantView = ({ resto, error, search, query }) => {
 				{query ? <p>Found : {resto?.founded}</p> : ""}
 			</div>
 			<div className="restaurant-grid">
-				{resto?.restaurants?.map((item) => (
+				{resto?.map((item) => (
 					<div className="restaurant-card" key={item.id}>
 						<div className="restaurant-image-wrapper">
 							<img
